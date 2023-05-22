@@ -11,8 +11,8 @@
 #define PERCENT_TO_EXPOSURE(amount) amount * 200.0
 #define EXPOSURE_TO_PERCENT(exposure) exposure / 200.0
 
-#define EVZ_INDICATOR "::Indicators\\Personal\\EuroFXVix"
 #define NEWS_INDICATOR "::Indicators\\Personal\\NewsIndicator"
+#define EVZ_INDICATOR "::Indicators\\EuroFXVix"
 #define INVISIBLE_ATR "::Indicators\\ATR"
 
 class CompleteNNFXTester : public Backtester
