@@ -1,24 +1,24 @@
 ﻿#define PROGRAM_NAME "NNFX_Am"
 
-#include "CompleteNNFXTester.mqh"
-#include "ExternalFunctions.mqh"
-#include "CompleteTesterParameters.mqh"
+#include "Backtester/CompleteNNFXTester.mqh"
+#include "Backtester/ExternalFunctions.mqh"
+#include "Backtester/CompleteTesterParameters.mqh"
 
 
-#include "..\Graphics\EVZNewsGraphicImport.mqh"
-#include "CustomIndicators.mqh"
+#include "Graphics\EVZNewsGraphicImport.mqh"
+#include "Backtester/CustomIndicators.mqh"
 
 #ifdef __MQL5__
 
-#resource "\\Indicators\\Personal\\EuroFXVix.ex5"
-#resource "\\Indicators\\Personal\\NewsIndicator.ex5"
-#resource "\\Indicators\\Personal\\ATR.ex5"
+#resource "Indicators\\EuroFXVix.ex5"
+#resource "Indicators\\NewsIndicator.ex5"
+#resource "Indicators\\ATR.ex5"
 
 #else
 
-#resource "\\Indicators\\Personal\\EuroFXVix.ex4"
-#resource "\\Indicators\\Personal\\NewsIndicator.ex4"
-#resource "\\Indicators\\Personal\\ATR.ex4"
+#resource "Indicators\\EuroFXVix.ex4"
+#resource "Indicators\\NewsIndicator.ex4"
+#resource "Indicators\\ATR.ex4"
 
 #endif
 

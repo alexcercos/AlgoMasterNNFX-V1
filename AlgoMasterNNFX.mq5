@@ -1,7 +1,7 @@
 ﻿//+------------------------------------------------------------------+
 //|                                               AlgoMasterNNFX.mq5 |
-//|                                 Copyright 2020, Alejandro Cercós |
-//|                                             https://www.mql5.com |
+//|                    Copyright 2020, Manuel Alejandro Cercós Pérez |
+//|                         https://www.mql5.com/en/users/alexcercos |
 //+------------------------------------------------------------------+
 
 #property copyright "Copyright 2021, Manuel Alejandro Cercós Pérez"
@@ -11,7 +11,7 @@
 #property version   "1.07"
 #property strict
 
-#include "Backtester\AlgoMasterNNFX.mqh"
+#include "AlgoMasterNNFX.mqh"
 
 
 int OnInit()
