@@ -35,98 +35,6 @@ void Backtester::~Backtester()
 {
 }
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-//    Multiple Buffers
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*
-double Backtester::GetValueFromBuffersVolume(int initBuffer, int endBuffer, int shift)
-{
-   if (initBuffer > endBuffer)
-   {
-      int aux = initBuffer;
-      initBuffer = endBuffer;
-      endBuffer = aux;
-   }
-
-   double val[1];
-   for (int i = initBuffer; i < endBuffer + 1; i++)
-   {
-      CopyBuffer(volumeHandles[activeSymbol], i, shift, 1, val);
-      double buffer = val[0];
-      
-      if (buffer != 0 && buffer != EMPTY_VALUE)
-      {
-         return buffer;
-      }
-   }
-   
-   return 0;
-}
-
-double Backtester::GetValueFromBuffers(int initBuffer, int endBuffer, int shift)
-{
-   if (initBuffer > endBuffer)
-   {
-      int aux = initBuffer;
-      initBuffer = endBuffer;
-      endBuffer = aux;
-   }
-
-   double val[1];
-   for (int i = initBuffer; i < endBuffer + 1; i++)
-   {
-      CopyBuffer(mainHandles[activeSymbol], i, shift, 1, val);
-      double buffer = val[0];
-      
-      if (buffer != 0 && buffer != EMPTY_VALUE)
-      {
-         return buffer;
-      }
-   }
-   
-   return 0;
-}
-
-
-double Backtester::GetValueFromBuffersVolume(int &listBuffers[], int shift)
-{
-
-   double val[1];
-   for (int i = 0; i < ArraySize(listBuffers); i++)
-   {
-      CopyBuffer(volumeHandles[activeSymbol], listBuffers[i], shift, 1, val);
-      double buffer = val[0];
-      
-      if (buffer != 0 && buffer != EMPTY_VALUE)
-      {
-         return buffer;
-      }
-   }
-   
-   return 0;
-}
-
-
-double Backtester::GetValueFromBuffers(int &listBuffers[], int shift)
-{
-
-   double val[1];
-   for (int i = 0; i < ArraySize(listBuffers); i++)
-   {
-      CopyBuffer(mainHandles[activeSymbol], listBuffers[i], shift, 1, val);
-      double buffer = val[0];
-      
-      if (buffer != 0 && buffer != EMPTY_VALUE)
-      {
-         return buffer;
-      }
-   }
-   
-   return 0;
-}
-*/
-
 double Backtester::GetIndicatorValue(int indicatorType, int shift, bool main = true)
 {
    switch (indicatorType)
@@ -282,38 +190,9 @@ void Backtester::UpdateIndicatorValues()
 
    CopyBuffer(atrHandles[activeSymbol], 0, finalDisplace, 2, atrCurrentValues);
    
-   /*
-   if (useMultipleBuffers)
-   {
-      if (readMultipleFromList)
-      {
-         //ArrayResize(mainCurrentValues, 2);
-         mainCurrentValues[1] = GetValueFromBuffers(buffersMain, finalDisplace);
-         mainCurrentValues[0] = GetValueFromBuffers(buffersMain, finalDisplace+1);
-         
-         //ArrayResize(mainSignalCurrentValues, 2);
-         mainSignalCurrentValues[1] = GetValueFromBuffers(buffersSignal, finalDisplace);
-         mainSignalCurrentValues[0] = GetValueFromBuffers(buffersSignal, finalDisplace+1);
-      }
-      else
-      {
-         //ArrayResize(mainCurrentValues, 2);
-         mainCurrentValues[1] = GetValueFromBuffers(mainBuffer, lastMainBuffer, finalDisplace);
-         mainCurrentValues[0] = GetValueFromBuffers(mainBuffer, lastMainBuffer, finalDisplace+1);
-         
-         //ArrayResize(mainSignalCurrentValues, 2);
-         mainSignalCurrentValues[1] = GetValueFromBuffers(signalBuffer, lastSignalBuffer, finalDisplace);
-         mainSignalCurrentValues[0] = GetValueFromBuffers(signalBuffer, lastSignalBuffer, finalDisplace+1);
-      }
-   }
-   else*/
-   //{
    CopyBuffer(mainHandles[activeSymbol], mainBuffer, finalDisplace, 2, mainCurrentValues);
    CopyBuffer(mainHandles[activeSymbol], signalBuffer, finalDisplace, 2, mainSignalCurrentValues);
-      
-      //Print(MQLInfoInteger(MQL_VISUAL_MODE));
-      //Print(mainCurrentValues[0] + " " + mainCurrentValues[1]);
-   //}
+
    
    if (use2Confirm)
    {
@@ -329,19 +208,6 @@ void Backtester::UpdateIndicatorValues()
    
    if (useVolumeIndicator)
    {
-      /*
-      if (multipleBuffersVolume)
-      {
-         //ArrayResize(volumeCurrentValues, 2);
-         volumeCurrentValues[1] = GetValueFromBuffersVolume(mainBufferVolume, lastBufferVolume, finalDisplace);
-         volumeCurrentValues[0] = GetValueFromBuffersVolume(mainBufferVolume, lastBufferVolume, finalDisplace+1);
-      }
-      else
-      {
-         CopyBuffer(volumeHandles[activeSymbol], mainBufferVolume, finalDisplace, 2, volumeCurrentValues);
-      }*/
-      
-      //--
       CopyBuffer(volumeHandles[activeSymbol], mainBufferVolume, finalDisplace, 2, volumeCurrentValues);
       
       CopyBuffer(volumeHandles[activeSymbol], signalBufferVolume, finalDisplace, 2, volumeSignalCurrentValues);
