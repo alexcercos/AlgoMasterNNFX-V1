@@ -13,7 +13,7 @@
 
 #define EVZ_INDICATOR "::Indicators\\Personal\\EuroFXVix"
 #define NEWS_INDICATOR "::Indicators\\Personal\\NewsIndicator"
-#define INVISIBLE_ATR "::Indicators\\Personal\\ATR"
+#define INVISIBLE_ATR "::Indicators\\ATR"
 
 class CompleteNNFXTester : public Backtester
 {
