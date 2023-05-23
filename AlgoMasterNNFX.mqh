@@ -5,7 +5,7 @@
 #include "Backtester/CompleteTesterParameters.mqh"
 
 
-#include "Graphics\EVZNewsGraphicImport.mqh"
+#include "Graphics/EVZNewsGraphicImport.mqh"
 #include "Backtester/CustomIndicators.mqh"
 
 #ifdef __MQL5__
@@ -33,9 +33,6 @@ int totalSymbols;
 bool detectTicks = false;
 bool isTester;
 
-#undef BLOCKED_LICENSE
-#define BLOCKED_LICENSE LICENSE_DEMO
-
 int InitEvent()
 {
    isTester = MQLInfoInteger(MQL_TESTER);
@@ -56,10 +53,7 @@ int InitEvent()
       
       //double tradeValue = (riskPercent /2.0) * AccountInfoDouble(ACCOUNT_BALANCE)/100.0;
       
-      ENUM_LICENSE_TYPE license = (ENUM_LICENSE_TYPE)MQLInfoInteger(MQL_LICENSE_TYPE);
-      bool demoLicense = license == BLOCKED_LICENSE;
-      
-      ProcessSymbolArray(demoLicense, symbolString, pairsPreset, symbolsToTrade, totalSymbols);
+      ProcessSymbolArray(symbolString, pairsPreset, symbolsToTrade, totalSymbols);
       
       bool useStats = (optimizationMode != N_EQUITY_COMP); //(optimizationMode == N_DIST_VALUE || optimizationMode == N_DIST_SHAPE);
       
@@ -144,7 +138,7 @@ int InitEvent()
          backtester.UseCompoundInterest();
       }
       
-      GetIndicatorHandles(license);
+      GetIndicatorHandles();
       
       if (use_advanced_TS)
       {
@@ -152,10 +146,10 @@ int InitEvent()
       	backtester.SetAdvancedTrailingStops(TS_buy_buffer, TS_sell_buffer);
       }
       
-      if (useEvz && !demoLicense && Period()==PERIOD_D1) GetEVZHandle(); //TODO: evz generico?
+      if (useEvz) GetEVZHandle();
       if (useExposure) backtester.UseCurrencyExposure();
       
-      if (useNews && !demoLicense)
+      if (useNews)
       {
          backtester.UseNewsFiltering(newsEUR, newsGBP, newsAUD, newsNZD, newsUSD, newsCAD, newsCHF, newsJPY);
       }
@@ -284,7 +278,7 @@ void TimerEvent()
 
 #define SUBSTITUTE_PARAM(type, id) SubstituteOptimizationParameter(type##_param##id, type##_index##id, type##Params);
 
-void GetIndicatorHandles(int user_license)
+void GetIndicatorHandles()
 {
    //Process parameters
    #ifdef __MQL5__
@@ -303,29 +297,19 @@ void GetIndicatorHandles(int user_license)
       double contParams[];
    #endif
    
-   if (user_license != BLOCKED_LICENSE)
-   {
-   	CDictionary* opt_dict = new CDictionary();
-   	CreateOptimizationDict(opt_dict);
+
+	CDictionary* opt_dict = new CDictionary();
+	CreateOptimizationDict(opt_dict);
+
+   ProcessParameters(indicatorName, indicatorParams, mainParams, opt_dict);
+   if (use2Confirm) ProcessParameters(indicatorName2nd, indicatorParams2nd, secondParams, opt_dict);
+   if (useExitIndicator) ProcessParameters(indicatorNameExit, indicatorParamsExit, exitParams, opt_dict);
+   if (useVolumeIndicator) ProcessParameters(indicatorNameVolume, indicatorParamsVolume, volumeParams, opt_dict);
+   if (useBaseline)        ProcessParameters(indicatorNameBaseline, indicatorParamsBaseline, baselineParams, opt_dict);
+   if (useContIndicator == CONT_CUSTOM)   ProcessParameters(indicatorNameCont, indicatorParamsCont, contParams, opt_dict);
    
-      ProcessParameters(indicatorName, indicatorParams, mainParams, opt_dict);
-      if (use2Confirm) ProcessParameters(indicatorName2nd, indicatorParams2nd, secondParams, opt_dict);
-      if (useExitIndicator) ProcessParameters(indicatorNameExit, indicatorParamsExit, exitParams, opt_dict);
-      if (useVolumeIndicator) ProcessParameters(indicatorNameVolume, indicatorParamsVolume, volumeParams, opt_dict);
-      if (useBaseline)        ProcessParameters(indicatorNameBaseline, indicatorParamsBaseline, baselineParams, opt_dict);
-      if (useContIndicator == CONT_CUSTOM)   ProcessParameters(indicatorNameCont, indicatorParamsCont, contParams, opt_dict);
-      
-      delete opt_dict;
-   }
-   else
-   {
-      ProcessParameters(indicatorName, mainParams);
-      if (use2Confirm)        ProcessParameters(indicatorName2nd, secondParams);
-      if (useExitIndicator)   ProcessParameters(indicatorNameExit, exitParams);
-      if (useVolumeIndicator) ProcessParameters(indicatorNameVolume, volumeParams);
-      if (useBaseline)        ProcessParameters(indicatorNameBaseline, baselineParams);
-      if (useContIndicator == CONT_CUSTOM)   ProcessParameters(indicatorNameCont, contParams);
-   }
+   delete opt_dict;
+
    
    
    // Check Native indicators

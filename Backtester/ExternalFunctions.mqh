@@ -2,15 +2,11 @@
 //|         FUNCTIONS FOR BOTH TESTERS                               |
 //+------------------------------------------------------------------+
 
-void ProcessSymbolArray(bool license_is_demo, string custom_string, int pair_preset, string &symbols_to_trade[], int &total_symbols)
+void ProcessSymbolArray(string custom_string, int pair_preset, string &symbols_to_trade[], int &total_symbols)
 {
    string newSymbolString;
    
-   if (license_is_demo)
-   {
-      newSymbolString = "EURUSD,GBPCHF,USDCHF";
-   }
-   else if (pair_preset == ALL_SYMBOLS  || pair_preset == ALL_SUBSTITUTE || pair_preset == ALL_SUFFIX)
+   if (pair_preset == ALL_SYMBOLS  || pair_preset == ALL_SUBSTITUTE || pair_preset == ALL_SUFFIX)
    {
       newSymbolString = "EURJPY,EURCHF,EURCAD,EURUSD,EURNZD,EURAUD,EURGBP,GBPJPY,GBPCHF,GBPCAD,GBPUSD,GBPNZD,GBPAUD,AUDJPY,AUDCHF,AUDCAD,AUDUSD,AUDNZD,NZDJPY,NZDCHF,NZDCAD,NZDUSD,USDJPY,USDCHF,USDCAD,CADJPY,CADCHF,CHFJPY";
    }
@@ -47,7 +43,7 @@ void ProcessSymbolArray(bool license_is_demo, string custom_string, int pair_pre
       newSymbolString = custom_string;
    }
    
-   if (license_is_demo || pair_preset!=SYMBOL_FILE)
+   if (pair_preset!=SYMBOL_FILE)
    {
 	   StringReplace(newSymbolString, " ", "");
 	   StringSplit(newSymbolString, ',', symbols_to_trade);
@@ -64,7 +60,7 @@ void ProcessSymbolArray(bool license_is_demo, string custom_string, int pair_pre
    
    
    
-   if (pair_preset == ALL_SUBSTITUTE && !license_is_demo)
+   if (pair_preset == ALL_SUBSTITUTE)
    {
       string substitutions = custom_string;
       StringReplace(substitutions, " ", "");
@@ -100,7 +96,7 @@ void ProcessSymbolArray(bool license_is_demo, string custom_string, int pair_pre
          }
       }
    }
-   if (pair_preset == ALL_SUFFIX && !license_is_demo)
+   if (pair_preset == ALL_SUFFIX)
    {
    	string sufix = custom_string;
    	TRIM_STRING_LEFT(sufix);
