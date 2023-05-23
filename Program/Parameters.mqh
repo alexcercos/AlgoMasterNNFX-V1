@@ -1,10 +1,12 @@
 ﻿
+#include "../Symbols/EnumPresets.mqh"
+
 #ifdef __MQL5__
    input group "Pairs to Backtest"
 #else 
    input string Pairs_to_Backtest = "==============="; //Pairs to Backtest
 #endif
-sinput Pairs pairsPreset = ALL_SYMBOLS; //Pairs Preset
+sinput EPairPresets pairsPreset = PP_ALL_SYMBOLS; //Pairs Preset
 input string symbolString = "AUDNZD,EURUSD,GBPJPY"; //Custom Symbols (separate by ",")
 
 

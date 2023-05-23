@@ -4,7 +4,7 @@
 #define PARENT(i) (i+1) / 2 - 1
 
 template<typename T>
-class MinHeap
+class CMinHeap
 {
 	protected:
 		T	m_heap[];
@@ -17,8 +17,8 @@ class MinHeap
 		void Rise(int index);
 		
 	public:
-		void MinHeap();
-		void MinHeap(T &array[]);
+		CMinHeap();
+		CMinHeap(T &array[]);
 		
 		T Peek();
 		void RemoveTop();
@@ -33,12 +33,12 @@ class MinHeap
 };
 
 template<typename T>
-void MinHeap::MinHeap():size(0)
+CMinHeap::CMinHeap():size(0)
 {
 }
 
 template<typename T>
-void MinHeap::MinHeap(T &array[])
+CMinHeap::CMinHeap(T &array[])
 {
 	ArrayCopy(m_heap, array);
 	size = ArraySize(m_heap);
@@ -47,7 +47,7 @@ void MinHeap::MinHeap(T &array[])
 }
 
 template<typename T>
-void MinHeap::Heapify()
+void CMinHeap::Heapify()
 {
    for (int i = size/2 - 1; i>=0; i--)
    {
@@ -56,7 +56,7 @@ void MinHeap::Heapify()
 }
 
 template<typename T>
-void MinHeap::Swap(int position1, int position2)
+void CMinHeap::Swap(int position1, int position2)
 {
    T aux = m_heap[position1];
    m_heap[position1] = m_heap[position2];
@@ -64,7 +64,7 @@ void MinHeap::Swap(int position1, int position2)
 }
 
 template<typename T>
-void MinHeap::Sink(int index)
+void CMinHeap::Sink(int index)
 {
    int minimum = index;
    
@@ -89,7 +89,7 @@ void MinHeap::Sink(int index)
 }
 
 template<typename T>
-void MinHeap::Rise(int index)
+void CMinHeap::Rise(int index)
 {
    int parent = PARENT(index);
    
@@ -101,13 +101,13 @@ void MinHeap::Rise(int index)
 }
 
 template<typename T>
-T MinHeap::Peek()
+T CMinHeap::Peek()
 {
    return m_heap[0];
 }
 
 template<typename T>
-void MinHeap::RemoveTop()
+void CMinHeap::RemoveTop()
 {
    Swap(0, size-1);
    
@@ -118,13 +118,13 @@ void MinHeap::RemoveTop()
 }
 
 template<typename T>
-T MinHeap::GetAtIndex(int index)
+T CMinHeap::GetAtIndex(int index)
 {
 	return m_heap[index];
 }
 
 template<typename T>
-void MinHeap::RemoveAtIndex(int index)
+void CMinHeap::RemoveAtIndex(int index)
 {
    if (index >= size) return;
    
@@ -137,13 +137,13 @@ void MinHeap::RemoveAtIndex(int index)
 }
 
 template<typename T>
-void MinHeap::PrintHeap()
+void CMinHeap::PrintHeap()
 {
 	ArrayPrint(m_heap);
 }
 
 template<typename T>
-void MinHeap::AddElement(T element)
+void CMinHeap::AddElement(T element)
 {
    ArrayResize(m_heap, size+1);
    

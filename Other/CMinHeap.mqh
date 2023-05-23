@@ -1,4 +1,4 @@
-﻿
+﻿//TODO remove (use other minheap)
 #define LEFT_CHILD(i) 2 * i + 1
 #define RIGHT_CHILD(i) 2 * i + 2
 #define PARENT(i) i / 2 - 1
@@ -122,3 +122,7 @@ void AddElement(T &heap[], T element)
    
    Rise(heap, size);
 }
+
+#undef LEFT_CHILD
+#undef RIGHT_CHILD
+#undef PARENT

@@ -1,8 +1,10 @@
 ﻿#define PROGRAM_NAME "NNFX_Am"
 
 #include "Backtester/CompleteNNFXTester.mqh"
-#include "Backtester/ExternalFunctions.mqh"
-#include "Backtester/CompleteTesterParameters.mqh"
+//#include "Backtester/ExternalFunctions.mqh"
+#include "Program/Parameters.mqh"
+
+#include "Symbols/Import.mqh"
 
 
 #include "Graphics/EVZNewsGraphicImport.mqh"
@@ -53,7 +55,10 @@ int InitEvent()
       
       //double tradeValue = (riskPercent /2.0) * AccountInfoDouble(ACCOUNT_BALANCE)/100.0;
       
-      ProcessSymbolArray(symbolString, pairsPreset, symbolsToTrade, totalSymbols);
+      totalSymbols = CSymbolProcessorFactory::ProcessSymbols(
+								symbolString,
+								symbolsToTrade, 
+								pairsPreset);
       
       bool useStats = (optimizationMode != N_EQUITY_COMP); //(optimizationMode == N_DIST_VALUE || optimizationMode == N_DIST_SHAPE);
       
