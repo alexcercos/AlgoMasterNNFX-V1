@@ -324,7 +324,7 @@ bool CReversePolishNotation::IsVariable(const string s)
 }
 
 #define POP_OPERAND(var) \
-	double var = stack[s-1].number; \
+	var = stack[s-1].number; \
 	s--; \
 	ArrayResize(stack, s);
 
@@ -334,6 +334,7 @@ double CReversePolishNotation::Evaluate_RPN(RPNToken &to_execute[], CDictionary*
 	
 	RPNToken stack[];
 	int s=0;
+	double o2;
 	
 	for (int i=0; i<total; i++)
 	{

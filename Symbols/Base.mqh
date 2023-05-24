@@ -6,6 +6,10 @@ class CSymbolProcessorBase
 	private:
 		void SplitSymbols(string symbol_string, string &result[]);
 		int FilterInvalid(string &origin[], string &destiny[]);
+		
+	#ifdef __MQL4__
+		bool SymbolExist(const string symbol_name, bool &is_custom);
+	#endif
 	
 	protected:
 		void TrimString(string &str);
@@ -57,8 +61,9 @@ int CSymbolProcessorBase::FilterInvalid(string &origin[],string &destiny[])
 			Print("SYMBOL DUPLICATED: \"", origin[i], "\"");
 			continue;
 		}
+		
 		if (SymbolExist(origin[i], is_custom))
-			NArrayFunctions::AddAtEnd<string>(destiny, total_symbols, origin[i], total_potential);
+			ArrayFunctions_AddAtEnd<string>(destiny, total_symbols, origin[i], total_potential);
 		else
 			Print("SYMBOL NOT FOUND: \"", origin[i], 
 					"\" (check if it is available with a different name)");
@@ -77,9 +82,24 @@ int CSymbolProcessorBase::ProcessSymbolString(string custom_string,string &resul
 	string potential_symbols[];
 	SplitSymbols(symbol_string, potential_symbols);
 	
-	NArrayFunctions::Sort<string>(potential_symbols);
+	ArrayFunctions_Sort<string>(potential_symbols);
 
 	PostProcessArray(potential_symbols, custom_string);
 	
 	return FilterInvalid(potential_symbols, result_array);
 }
+
+#ifdef __MQL4__
+
+bool CSymbolProcessorBase::SymbolExist(const string symbol_name,bool &is_custom)
+{
+	//is_custom not used
+	MqlRates array[];
+	
+   if (CopyRates(symbol_name, PERIOD_CURRENT, 0, 1, array)<0)
+		return false;
+	
+	return true;
+}
+
+#endif

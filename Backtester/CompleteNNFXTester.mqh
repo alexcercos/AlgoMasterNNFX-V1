@@ -799,15 +799,16 @@ void CompleteNNFXTester::UpdateTrailingStops(void)
    double trailingValue[];
    #endif
    
+   double tValue;
    if (buyArray[activeSymbol].HasTouchedTP())
    {
    	if (use_advanced_ts)
    	{
    	   #ifdef __MQL5__
    		CopyBuffer(trailingHandles[activeSymbol], adv_ts_buyBuffer, finalDisplace, 1, trailingValue);
-   		double tValue = trailingValue[0];
+   		tValue = trailingValue[0];
    		#else
-   		double tValue = GetICustom(trailingIndName, trailingParameters, adv_ts_buyBuffer, DISPLACEMENT);
+   		tValue = GetICustom(trailingIndName, trailingParameters, adv_ts_buyBuffer, DISPLACEMENT);
    		#endif
    		
    		buyArray[activeSymbol].UpdateTrailingStopToValue(currentRates[DATA_RECENT].close, tValue, currentRates[DATA_RECENT].time);
@@ -821,9 +822,9 @@ void CompleteNNFXTester::UpdateTrailingStops(void)
    	{
    	   #ifdef __MQL5__
    		CopyBuffer(trailingHandles[activeSymbol], adv_ts_sellBuffer, finalDisplace, 1, trailingValue);
-   		double tValue = trailingValue[0];
+   		tValue = trailingValue[0];
    		#else
-   		double tValue = GetICustom(trailingIndName, trailingParameters, adv_ts_sellBuffer, DISPLACEMENT);
+   		tValue = GetICustom(trailingIndName, trailingParameters, adv_ts_sellBuffer, DISPLACEMENT);
    		#endif
    		
    		sellArray[activeSymbol].UpdateTrailingStopToValue(currentRates[DATA_RECENT].close, tValue, currentRates[DATA_RECENT].time);
@@ -863,8 +864,8 @@ void CompleteNNFXTester::DetectPossibleGaps(void)
 
    int maxCandles = iBarShift(Symbol(), PERIOD_CURRENT, firstTradingDay);
    bool detected = false;
-   
-   for (int i=0; i<totalSymbols; i++)
+   int i;
+   for (i=0; i<totalSymbols; i++)
    {
       symbolCandles[i] = iBarShift(symbolsToTrade[i], PERIOD_CURRENT, firstTradingDay);
       
@@ -881,7 +882,7 @@ void CompleteNNFXTester::DetectPossibleGaps(void)
       Print(BIG_SEPARATOR_LINE);
       Print("Possible gaps in data history have been detected:");
       
-      for (int i=0; i<totalSymbols; i++)
+      for (i=0; i<totalSymbols; i++)
       {
          if (symbolCandles[i] < maxCandles)
          {

@@ -908,6 +908,10 @@ int GenericBacktester::GetIndicatorSignal(string &out_info, int indicatorType, i
    
    bool isBuyColor, lastBuyColor;
    
+   #ifdef __MQL4__
+   double sellAc, sellLs;
+   #endif
+   
    switch(GetIndicatorMode(indicatorType))
    {
       case ZERO_LINE_CROSS:
@@ -967,11 +971,11 @@ int GenericBacktester::GetIndicatorSignal(string &out_info, int indicatorType, i
          	isBuyColor = GetIndicatorValue(indicatorType, DISPLACEMENT + shift, int(GetIndicatorMainBuffer(indicatorType)+1)) == GetIndicatorBuyColor(indicatorType);
          	lastBuyColor = GetIndicatorValue(indicatorType, DISPLACEMENT+1 + shift, int(GetIndicatorMainBuffer(indicatorType)+1)) == GetIndicatorBuyColor(indicatorType);
       	#else
-      	   double sellAc = GetIndicatorValue(indicatorType, DISPLACEMENT + shift, colorSell);
+      	   sellAc = GetIndicatorValue(indicatorType, DISPLACEMENT + shift, colorSell);
       	   actual = actual==EMPTY_VALUE?0.0 : actual;
       	   sellAc = sellAc==EMPTY_VALUE?0.0 : sellAc;
       	   
-      	   double sellLs = GetIndicatorValue(indicatorType, DISPLACEMENT+1 + shift, colorSell);
+      	   sellLs = GetIndicatorValue(indicatorType, DISPLACEMENT+1 + shift, colorSell);
       	   last = last==EMPTY_VALUE?0.0 : last;
       	   sellLs = sellLs==EMPTY_VALUE?0.0 : sellLs;
       	   
@@ -990,11 +994,11 @@ int GenericBacktester::GetIndicatorSignal(string &out_info, int indicatorType, i
          	isBuyColor = GetIndicatorValue(indicatorType, DISPLACEMENT + shift, int(GetIndicatorMainBuffer(indicatorType)+1)) == GetIndicatorBuyColor(indicatorType);
          	lastBuyColor = GetIndicatorValue(indicatorType, DISPLACEMENT+1 + shift, int(GetIndicatorMainBuffer(indicatorType)+1)) == GetIndicatorBuyColor(indicatorType);
       	#else
-      	   double sellAc = GetIndicatorValue(indicatorType, DISPLACEMENT + shift, colorSell);
+      	   sellAc = GetIndicatorValue(indicatorType, DISPLACEMENT + shift, colorSell);
       	   actual = actual==EMPTY_VALUE?0.0 : actual;
       	   sellAc = sellAc==EMPTY_VALUE?0.0 : sellAc;
       	   
-      	   double sellLs = GetIndicatorValue(indicatorType, DISPLACEMENT+1 + shift, colorSell);
+      	   sellLs = GetIndicatorValue(indicatorType, DISPLACEMENT+1 + shift, colorSell);
       	   last = last==EMPTY_VALUE?0.0 : last;
       	   sellLs = sellLs==EMPTY_VALUE?0.0 : sellLs;
       	   

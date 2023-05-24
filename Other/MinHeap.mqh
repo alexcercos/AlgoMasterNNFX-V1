@@ -137,12 +137,6 @@ void CMinHeap::RemoveAtIndex(int index)
 }
 
 template<typename T>
-void CMinHeap::PrintHeap()
-{
-	ArrayPrint(m_heap);
-}
-
-template<typename T>
 void CMinHeap::AddElement(T element)
 {
    ArrayResize(m_heap, size+1);

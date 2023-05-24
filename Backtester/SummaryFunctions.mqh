@@ -127,7 +127,8 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       Print("Failed to open the file " + SUMMARY_FILE + " by the absolute path.");
       Print("Error code ",GetLastError());
    }
-
+	
+	int i;
    if (filehandle != INVALID_HANDLE)
    {
       string toWrite = "";
@@ -144,15 +145,16 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       #endif
       if (optMode == N_EQUITY_COMP || optMode == N_EQUITY_CURVE || optMode == N_WIN_RATE || optMode == N_TOTAL_PIPS) //Only duplicate on Equity Curves and Win Rate
       {
-         for (int i = 0; i < total_symbols; i++)
+      	
+         for (i = 0; i < total_symbols; i++)
             toWrite = toWrite + symbolsNames[i]+ "+\t";
          
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
             toWrite = toWrite + symbolsNames[i]+ "-\t";
       }
       else
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
             toWrite = toWrite + symbolsNames[i]+ "\t";
       }
       
@@ -163,11 +165,11 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       #ifdef NNFX_MAIN_TESTER
 	      if (optMode == N_TOTAL_PROFIT)
 	      {
-	         for (int i = 0; i < total_symbols; i++)
+	         for (i = 0; i < total_symbols; i++)
 	         {
 	            toWrite = toWrite + DoubleToString(grossWins[i], 2)+ "\t";
 	         }
-	         for (int i = 0; i < total_symbols; i++)
+	         for (i = 0; i < total_symbols; i++)
 	         {
 	            toWrite = toWrite + DoubleToString(grossLoses[i], 2)+ "\t";
 	         }
@@ -176,25 +178,25 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       #endif
       if (optMode == N_WIN_RATE)
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             toWrite = toWrite + IntegerToString(totalWins[i])+ "\t";
          }
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             toWrite = toWrite + IntegerToString(totalLoses[i])+ "\t";
          }
       }
       else if (optMode == N_DRAWDOWN)
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             toWrite = toWrite + DoubleToString(-drawdowns[i], 2)+ "\t";
          }
       }
       else if (optMode == N_ROI)
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             double pairRoi;
             CalculateReturnOnInvestment((grossWins[i]+grossLoses[i])/initialAccount, years, compound, pairRoi);
@@ -203,7 +205,7 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       }
       else if (optMode == N_PROFIT_FACTOR)
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             double pairPF;
             CalculateProfitFactor(grossWins[i], grossLoses[i], pairPF);
@@ -212,7 +214,7 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       }
       else if (optMode == N_EXP_PAYOFF)
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             double pairEP;
             CalculateExpectedPayoff((grossWins[i]+ grossLoses[i]), (totalWins[i]+totalLoses[i]), pairEP);
@@ -221,7 +223,7 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       }
       else if (optMode == N_DIST_SHAPE || optMode == N_DIST_VALUE || optMode == N_TOTAL_PROFIT)
       {
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             toWrite = toWrite + DoubleToString(grossWins[i]+grossLoses[i], 2)+ "\t";
          }
@@ -230,11 +232,11 @@ void WriteSummaryFile(int optMode, string &symbolsNames[], int &totalWins[], int
       {
          int digits = optMode==N_TOTAL_PIPS?0:2;
       
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             toWrite = toWrite + DoubleToString(grossWins[i], digits)+ "\t";
          }
-         for (int i = 0; i < total_symbols; i++)
+         for (i = 0; i < total_symbols; i++)
          {
             toWrite = toWrite + DoubleToString(grossLoses[i], digits)+ "\t";
          }
@@ -545,7 +547,8 @@ void WriteDistributionFile(double statStep, int maxIndex, int minIndex, int &sta
    if(filehandle!=INVALID_HANDLE)
    {
       string toWrite = "";
-      for (int d=0; d < maxIndex - minIndex + 1; d++)
+      int d;
+      for (d=0; d < maxIndex - minIndex + 1; d++)
       {
          double currentAmount = (d+minIndex)*statStep;
          
@@ -555,7 +558,7 @@ void WriteDistributionFile(double statStep, int maxIndex, int minIndex, int &sta
       FileWrite(filehandle, toWrite);
       toWrite = "";
       
-      for (int d=0; d < maxIndex - minIndex + 1; d++)
+      for (d=0; d < maxIndex - minIndex + 1; d++)
       {
          toWrite = toWrite + IntegerToString(statsArray[d]) + "\t";
       }

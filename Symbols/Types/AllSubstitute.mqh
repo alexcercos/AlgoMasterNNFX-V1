@@ -39,7 +39,7 @@ void CSymbolProcessorSubstituteAll::SwapSymbol(string &array[], string &original
 	TrimString(original);
 	TrimString(replace);
 	
-	int index = NArrayFunctions::BinarySearch<string>(array, original);
+	int index = ArrayFunctions_BinarySearch<string>(array, original);
 	
 	if (array[index]!=original) return;
 	
@@ -54,5 +54,5 @@ void CSymbolProcessorSubstituteAll::SwapSymbol(string &array[], string &original
 		array[index] = replace;
 		
 	//Sort after each change
-	NArrayFunctions::Sort<string>(array);
+	ArrayFunctions_Sort<string>(array);
 }

@@ -29,5 +29,5 @@ void CSymbolProcessorFile::PostProcessArray(string &array[], string &custom_stri
    }
    
    //Sort symbols in file
-   NArrayFunctions::Sort<string>(array);
+   ArrayFunctions_Sort<string>(array);
 }

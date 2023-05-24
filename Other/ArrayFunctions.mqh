@@ -1,10 +1,7 @@
 ﻿#include "../Other/MinHeap.mqh"
 
-namespace NArrayFunctions
-{
-
 template<typename T>
-T SumArray(T &array[])
+T ArrayFunctions_SumArray(T &array[])
 {
 	int t = ArraySize(array);
 	
@@ -17,7 +14,7 @@ T SumArray(T &array[])
 }
 
 template<typename T>
-void AddAtEnd(T &array[], int &total, T element, int reserve=0)
+void ArrayFunctions_AddAtEnd(T &array[], int &total, T element, int reserve=0)
 {
 	ArrayResize(array, total+1, reserve);
 	array[total] = element;
@@ -25,7 +22,7 @@ void AddAtEnd(T &array[], int &total, T element, int reserve=0)
 }
 
 template<typename T>
-void AddAtEndUntracked(T &array[], T element, int reserve=0)
+void ArrayFunctions_AddAtEndUntracked(T &array[], T element, int reserve=0)
 {
 	int total = ArraySize(array);
 	ArrayResize(array, total+1, reserve);
@@ -33,7 +30,7 @@ void AddAtEndUntracked(T &array[], T element, int reserve=0)
 }
 
 template<typename T>
-T PopLast(T &array[],int &total)
+T ArrayFunctions_PopLast(T &array[],int &total)
 {
 	if (total==0) return NULL;
 
@@ -45,7 +42,7 @@ T PopLast(T &array[],int &total)
 }
 
 template<typename T>
-int BinarySearch(T &array[], T search)
+int ArrayFunctions_BinarySearch(T &array[], T search)
 {
 	int min_i = 0;
 	int max_i = ArraySize(array)-1;
@@ -67,9 +64,9 @@ int BinarySearch(T &array[], T search)
 }
 
 template<typename T>
-void Sort(T &array[])
+void ArrayFunctions_Sort(T &array[])
 {
-	CMinHeap<T> heap = CMinHeap<T>(array);
+	CMinHeap<T> * heap = new CMinHeap<T>(array);
 	
 	int total = heap.Size();
 	for (int i=0; i<total; i++)
@@ -77,6 +74,6 @@ void Sort(T &array[])
 		array[i] = heap.Peek();
 		heap.RemoveTop();
 	}
+	
+	delete heap;
 }
-
-} //end namespace
