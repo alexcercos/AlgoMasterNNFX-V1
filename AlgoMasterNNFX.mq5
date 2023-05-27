@@ -6,7 +6,7 @@
 
 #property copyright "Copyright 2021, Manuel Alejandro Cercós Pérez"
 #property link      "https://www.mql5.com/en/users/alexcercos"
-#property icon      "\\Images\\ProgramIcons\\algomasterLogo.ico"
+#property icon      "Images\\algomasterLogo.ico"
 #property description "Complete multipair algorithm tester for the No Nonsense Forex method (NNFX).\nIncludes 6 customizable indicators, money management rules (EVZ, news and exposure), many types of summary and optimization modes..."
 #property version   "1.07"
 #property strict
