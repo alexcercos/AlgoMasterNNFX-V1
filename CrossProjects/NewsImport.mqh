@@ -48,6 +48,8 @@ void ImportNewsFromPeriod(datetime initTime, datetime lastTime, bool rewrite_fil
       {
          currentTime = ImportWeekNews(currentTime, rewrite_files);
          
+         if (currentTime == 0) return;
+         
          currentTime += ONE_WEEK;
       }
       
@@ -97,6 +99,8 @@ datetime ImportWeekNews(datetime fromTime, bool rewrite_files = false)
       Print("Error in WebRequest. Error code  =",GetLastError());
       
       MessageBox("Add the address '"+domain+"' in the list of allowed URLs on tab 'Expert Advisors'","Error",MB_ICONINFORMATION);
+      
+      return 0;
    }
    else
    {

@@ -24,7 +24,7 @@
 
 #endif
 
-//CGraphicProgram program; //TODO
+CGraphicProgram* program;
 
 
 CompleteNNFXTester *backtester;
@@ -40,12 +40,12 @@ int InitEvent()
    isTester = MQLInfoInteger(MQL_TESTER);
    if (!isTester)
    {
-      //program.OnInitEvent(); //TODO
-      /*
-      if (!program.CreateGUI())
-      {
-         return INIT_FAILED;
-      }*/
+   	program = new CGraphicProgram();
+   	
+   	if (!program.Create("AlgoMaster"))
+   		return INIT_FAILED;
+   	
+   	program.Run();
       
       return INIT_SUCCEEDED;
    }
@@ -159,6 +159,7 @@ int InitEvent()
          backtester.UseNewsFiltering(newsEUR, newsGBP, newsAUD, newsNZD, newsUSD, newsCAD, newsCHF, newsJPY);
       }
       #ifdef __MQL5__
+      //TODO news indicator in MT4? (unless it was removed for a reason)
       if (showNewsIndicator && MQLInfoInteger(MQL_VISUAL_MODE))
       {
          int newsHandle = iCustom(Symbol(), PERIOD_CURRENT, NEWS_INDICATOR, 0, 1, true, false, false, false, false, newsEUR, newsGBP, newsAUD, newsNZD, newsUSD, newsCAD, newsCHF, newsJPY, newsIconDistance, newsIconBetween);
@@ -257,7 +258,7 @@ void TickEvent()
 
 void ChartEvent_Event(const int id,const long& lparam,const double& dparam,const string& sparam)
 {
-   //program.ChartEvent(id, lparam, dparam, sparam); //TODO
+	program.ChartEvent(id, lparam, dparam, sparam);
 }
 
 datetime lastCandle = 0;
@@ -266,7 +267,8 @@ void DeInitEvent(int reason)
 {
    if (!isTester)
    {
-      //program.OnDeinitEvent(reason); //TODO
+   	program.Destroy(reason);
+      delete program;
       return;
    }
    
@@ -278,7 +280,6 @@ void TimerEvent()
 {
    //if (!isTester) //TODO
    //   program.OnTimerEvent();
-   
 }
 
 #define SUBSTITUTE_PARAM(type, id) SubstituteOptimizationParameter(type##_param##id, type##_index##id, type##Params);
