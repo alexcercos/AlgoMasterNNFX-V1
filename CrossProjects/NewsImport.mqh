@@ -220,8 +220,7 @@ string GetInfoRow(MqlDateTime& currentTime, string &row)
          end = StringFind(rawDate, "</", 0);
          
          rawDate = StringSubstr(rawDate, init, end-init);
-         
-         StringReplace(rawDate, "<span>", " ");
+         StringReplace(rawDate, "<span>", "");
          
          string parsedDate[];
          StringSplit(rawDate, ' ', parsedDate);
@@ -239,9 +238,8 @@ string GetInfoRow(MqlDateTime& currentTime, string &row)
          if (lastDate != rawDate) lastTime="00:00";
          lastDate = rawDate;
       }
-      info = info + lastDate + " ";
    }
-   
+   info = lastDate + " ";
    
    // TIME
    
@@ -308,7 +306,7 @@ string GetInfoRow(MqlDateTime& currentTime, string &row)
    {
       string currency = "";
       if (end-init >1)
-         currency = StringSubstr(row, init+2, end-init-2);
+         currency = StringSubstr(row, init+1, end-init);
       
       if (currency == "" || currency == "CNY") return "";
          
@@ -480,9 +478,9 @@ CNews* CreateNews(string completeLine)
    NewsImpactEnum impact = NON_ECONOMIC;
    if (ArraySize(sep)>=4)
    {
-      if (sep[3]=="low") impact = LOW_IMPACT;
-      else if (sep[3]=="medium") impact = MEDIUM_IMPACT;
-      else if (sep[3]=="high") impact = HIGH_IMPACT;
+      if (sep[3]=="low" || sep[3] == "ff-impact-yel") impact = LOW_IMPACT;
+      else if (sep[3]=="medium" || sep[3] == "ff-impact-ora") impact = MEDIUM_IMPACT;
+      else if (sep[3]=="high" || sep[3] == "ff-impact-red") impact = HIGH_IMPACT;
    }
    
    return new CNews(sep[1], sep[2], StringToTime(sep[0]), impact);
