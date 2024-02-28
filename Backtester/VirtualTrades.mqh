@@ -222,7 +222,7 @@ void VirtualTrade::OpenTrade(double open_price, double atr, int order_type, date
 		   	openPrice = ask;
 		   	
 		   	stopLoss = ask - atr * slAtr;
-      		takeProfit = ask + atr;
+      		takeProfit = ask + atr * tpAtr;
 		   
 		      m_trade.Buy(lots, _symbol, 0.0, stopLoss, takeProfit);
 		      SELECT_OPEN_TRADE
@@ -238,7 +238,7 @@ void VirtualTrade::OpenTrade(double open_price, double atr, int order_type, date
 		   	openPrice = bid;
 		   	
 		   	stopLoss = bid + atr * slAtr;
-      		takeProfit = bid - atr;
+      		takeProfit = bid - atr * tpAtr;
 		   
 		   	m_trade.Sell(lots, _symbol, 0.0, stopLoss, takeProfit);
 		      SELECT_OPEN_TRADE
@@ -256,12 +256,12 @@ void VirtualTrade::OpenTrade(double open_price, double atr, int order_type, date
    if (tradeType == ORDER_TYPE_BUY)
    {
       stopLoss = openPrice - atr * slAtr;
-      takeProfit = openPrice + atr;
+      takeProfit = openPrice + atr * tpAtr;
    }
    else //ORDER_TYPE_SELL
    {
       stopLoss = openPrice + atr * slAtr;
-      takeProfit = openPrice - atr;
+      takeProfit = openPrice - atr * tpAtr;
    }
    
    if (_debugVirtualTrades)
